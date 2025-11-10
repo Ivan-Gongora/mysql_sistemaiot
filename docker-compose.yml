@@ -1,0 +1,27 @@
+services:
+  mysql_sistemaiot:
+    image: mysql:8.0
+    container_name: mysql_sistemaiot
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sistemaiotA_db
+      MYSQL_USER: sistemaiot
+      MYSQL_PASSWORD: raspberry
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./basedatos.sql:/docker-entrypoint-initdb.d/basedatos.sql:ro
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_sistemaiot
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql_sistemaiot
+      PMA_USER: sistemaiot
+      PMA_PASSWORD: raspberry
+      PMA_ARBITRARY: 1
