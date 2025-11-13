@@ -8,6 +8,8 @@ services:
       MYSQL_DATABASE: sistemaiotA_db
       MYSQL_USER: sistemaiot
       MYSQL_PASSWORD: raspberry
+
+      TZ: America/Cancun
     ports:
       - "3306:3306"
     volumes:
