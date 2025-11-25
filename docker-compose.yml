@@ -3,18 +3,19 @@ services:
     image: mysql:8.0
     container_name: mysql_sistemaiot
     restart: always
+    command: --log-bin-trust-function-creators=1
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: sistemaiotA_db
       MYSQL_USER: sistemaiot
       MYSQL_PASSWORD: raspberry
-
       TZ: America/Cancun
     ports:
       - "3306:3306"
     volumes:
       - ./data:/var/lib/mysql
       - ./basedatos.sql:/docker-entrypoint-initdb.d/basedatos.sql:ro
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
