@@ -222,6 +222,56 @@ CREATE TABLE sistema_logs (
     INDEX idx_tipo (tipo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+
+-- -----------------------------------------------------------
+-- Paso 9.5 (Nuevo): Tabla de Actividad del Usuario (Versión Final)
+-- -----------------------------------------------------------
+CREATE TABLE actividad_reciente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    proyecto_id INT NULL, 
+    
+    tipo_evento ENUM(
+        -- Proyectos
+        'PROYECTO_CREADO', 
+        'PROYECTO_MODIFICADO',
+        'PROYECTO_ELIMINADO',
+        'USUARIO_INVITADO', 
+         'USUARIO_REMOVIDO', 
+        -- Dispositivos
+        'DISPOSITIVO_CREADO', 
+        'DISPOSITIVO_MODIFICADO',
+        'DISPOSITIVO_ELIMINADO',
+        
+        -- Sensores
+        'SENSOR_CREADO', 
+        'SENSOR_MODIFICADO',
+        'SENSOR_ELIMINADO',
+        
+        -- Campos
+        'CAMPO_CREADO', 
+        'CAMPO_MODIFICADO',
+        'CAMPO_ELIMINADO',
+        
+        -- Energia
+        'LOTE_ENERGIA_CARGADO', 
+        
+        -- Futuro
+        'SIMULACION_EJECUTADA',
+        'ALERTA_GENERADA' 
+    ) NOT NULL,
+    
+    titulo VARCHAR(255) NOT NULL,
+    fuente VARCHAR(255) NOT NULL,
+    fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    INDEX idx_usuario_fecha (usuario_id, fecha DESC),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (proyecto_id) REFERENCES proyectos(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 -- -----------------------------------------------------------
 -- Paso 10: Índices críticos
 -- -----------------------------------------------------------
