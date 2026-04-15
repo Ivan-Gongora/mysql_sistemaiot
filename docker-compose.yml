@@ -15,7 +15,7 @@ services:
     volumes:
       - ./data:/var/lib/mysql
       - ./basedatos.sql:/docker-entrypoint-initdb.d/basedatos.sql:ro
-
+      - ./DatosInicio.sql:/docker-entrypoint-initdb.d/2_DatosInicio.sql:ro
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
